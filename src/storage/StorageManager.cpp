@@ -28,6 +28,10 @@
 
 #include "kodi/libKODI_peripheral.h"
 
+#if defined(HAVE_LIBIPFS)
+#include "ipfs/libipfs.h"
+#endif
+
 using namespace JOYSTICK;
 
 // Resources folder for add-on and user data

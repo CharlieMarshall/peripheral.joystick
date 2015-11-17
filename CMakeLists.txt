@@ -21,6 +21,7 @@ PROTOBUF_GENERATE_CPP(PROTO_SRCS PROTO_HDRS ${ProtoFiles})
 find_package(kodi REQUIRED)
 find_package(kodiplatform REQUIRED)
 find_package(platform REQUIRED)
+find_package(libipfs)
 
 include_directories(${INCLUDES}
                     ${PROJECT_SOURCE_DIR}/src
@@ -28,7 +29,12 @@ include_directories(${INCLUDES}
                     ${kodiplatform_INCLUDE_DIRS}
                     ${platform_INCLUDE_DIRS}
                     ${PROTOBUF_INCLUDE_DIRS}
-                    ${CMAKE_CURRENT_BINARY_DIR}) # For protobuf
+                    ${CMAKE_CURRENT_BINARY_DIR} # For protobuf
+                    ${libipfs_INCLUDE_DIRS})
+
+if (libipfs_FOUND)
+  add_definitions(-DHAVE_LIBIPFS)
+endif()
 
 set(JOYSTICK_SOURCES src/addon.cpp
                      src/api/AnomalousTriggerFilter.cpp
@@ -71,7 +77,8 @@ endif()
 
 list(APPEND DEPLIBS ${kodiplatform_LIBRARIES}
                     ${platform_LIBRARIES}
-                    ${PROTOBUF_LIBRARIES})
+                    ${PROTOBUF_LIBRARIES}
+                    ${libipfs_LIBRARIES})
 
 # --- Cocoa --------------------------------------------------------------------
 
